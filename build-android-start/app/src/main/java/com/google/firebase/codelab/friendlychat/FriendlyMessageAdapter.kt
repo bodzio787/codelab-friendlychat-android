@@ -65,9 +65,22 @@ class FriendlyMessageAdapter(
         return if (options.snapshots[position].text != null) VIEW_TYPE_TEXT else VIEW_TYPE_IMAGE
     }
 
-    inner class MessageViewHolder(private val binding: MessageBinding) : ViewHolder(binding.root) {
-        fun bind(item: FriendlyMessage) {
-            // TODO: implement
+    inner class MessageViewHolder(private val binding: MessageBinding) : ViewHolder(binding.root)
+    {
+        fun bind(item: FriendlyMessage)
+        {
+            binding.messageTextView.text = item.text
+            setTextColor(item.name, binding.messageTextView)
+
+            binding.messengerTextView.text = if (item.name == null) ANONYMOUS else item.name
+            if (item.photoUrl != null)
+            {
+                loadImageIntoView(binding.messengerImageView, item.photoUrl!!)
+            }
+            else
+            {
+                binding.messengerImageView.setImageResource(R.drawable.ic_account_circle_black_36dp)
+            }
         }
 
         private fun setTextColor(userName: String?, textView: TextView) {
@@ -83,10 +96,22 @@ class FriendlyMessageAdapter(
 
     inner class ImageMessageViewHolder(private val binding: ImageMessageBinding) :
         ViewHolder(binding.root) {
-        fun bind(item: FriendlyMessage) {
-            // TODO: implement
+        fun bind(item: FriendlyMessage)
+        {
+            loadImageIntoView(binding.messageImageView, item.imageUrl!!)
+
+            binding.messengerTextView.text = if (item.name == null) ANONYMOUS else item.name
+            if (item.photoUrl != null)
+            {
+                loadImageIntoView(binding.messengerImageView, item.photoUrl!!)
+            }
+            else
+            {
+                binding.messengerImageView.setImageResource(R.drawable.ic_account_circle_black_36dp)
+            }
         }
     }
+
 
     private fun loadImageIntoView(view: ImageView, url: String, isCircular: Boolean = true) {
         if (url.startsWith("gs://")) {

@@ -20,8 +20,10 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.ImageView
 
-class MyButtonObserver(private val button: ImageView) : TextWatcher {
-    override fun onTextChanged(charSequence: CharSequence, start: Int, count: Int, after: Int) {
+class MyButtonObserver(private val button: ImageView) : TextWatcher
+{
+    override fun onTextChanged(charSequence: CharSequence, start: Int, count: Int, after: Int)
+    {
         if (charSequence.toString().trim().isNotEmpty()) {
             button.isEnabled = true
             button.setImageResource(R.drawable.outline_send_24)
